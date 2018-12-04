@@ -8,9 +8,10 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/', (req, res) => {
-    res.render('index.ejs')
-})
+require('./routes/client.js')(app);
+require('./routes/auth.js')(app);
+
+
 
 //Tonight I am going to build out the Front end of the site
 //set up docsify for documentation

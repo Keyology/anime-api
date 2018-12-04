@@ -1,0 +1,19 @@
+h2 {
+    text-align: center;
+    font-size: 30px;
+
+}
+
+.landing-imge {
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100vw;
+    height: 90vh;
+    /* padding: 20px; */
+    outline-style: solid 1em;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
