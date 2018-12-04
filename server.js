@@ -1,8 +1,15 @@
 const express = require('express');
 const app = express();
-const port = process.env.port || 3000
+const bodyParser = require('body-parser');
+const port = process.env.port || 3000;
 
 require('./db/anime-api-db')
+
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+app.use(bodyParser.json())
 
 app.set('view engine', 'ejs');
 
