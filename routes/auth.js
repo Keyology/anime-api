@@ -19,28 +19,43 @@ module.exports = (app) => {
 
     app.post('/signup', (req, res) => {
         //this route will signup user
-        const user = new User(req.body);
+        bcrypt.hash(req.body.password, 10, (err, hash) => {
+            if (err) {
+                return res.status(500).json({
+                    error: err
 
-        user.save()
-            .then(user => {
-                let token = jwt.sign({
-                    _id: user._id
-                }, process.env.SECRET, {
-                    expiresIn: "60 days"
-                })
-                res.cookie('nToken', token, {
-                    maxAge: 900000,
-                    httpOnly: true
                 });
-                console.log(req.cookies);
-                res.redirect('/');
-            })
-            .catch(err => {
-                console.log(err.message);
-                return res.status(400).send({
-                    err: err
+            } else {
+                const user = new User({
+                    //might throw error 
+                    email: req.body.email,
+                    password: hash
                 });
-            });
+                user.save().then(user => {
+                    let token = jwt.sign({
+                        id: user.Account_id
+                    }, process.env.SECRET, {
+                        expiresIn: "60 days"
+                    });
+                    res.cookie('nToken', token, {
+                        maxAge: 900000,
+                        httpOnly: true
+                    });
+                    console.log(req.cookies);
+                    res.redirect('/')
+                    console.log(user);
+
+                }).catch(error => {
+                    res.status(500).json({
+                        error: err
+                    });
+                });
+            }
+
+        });
+
+
+
     });
 
 

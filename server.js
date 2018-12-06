@@ -5,6 +5,8 @@ const port = process.env.port || 3000;
 
 require('./db/anime-api-db')
 
+require('dotenv').config()
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
