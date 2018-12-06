@@ -1,17 +1,44 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const port = process.env.port || 3000;
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
+const port = process.env.PORT || 7000;
+
+
+const checkAuth = (req, res, next) => {
+    console.log("Checking authentication");
+    if (typeof req.cookies.nToken === "undefined" || req.cookies.nToken === null) {
+
+        req.user = null;
+        console.log('"checkAuth if statement is running')
+    } else {
+        console.log('"checkAuth else statement is running')
+        const token = req.cookies.nToken;
+        const decodedToken = jwt.decode(token, {
+            complete: true
+        }) || {};
+        req.user = decodedToken.payload;
+    }
+
+    next();
+};
+
+
 
 require('./db/anime-api-db')
 
 require('dotenv').config()
+
 
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
 app.use(bodyParser.json())
+app.use(cookieParser());
+app.use(checkAuth);
+
 
 app.set('view engine', 'ejs');
 
@@ -22,21 +49,4 @@ require('./routes/auth.js')(app);
 
 
 
-//Tonight I am going to build out the Front end of the site
-//set up docsify for documentation
-/*make sure to write good descriptive comments on everything
-to make writing the documentation easier.
-*/
-
-/* In the front-end there will be a nav bar witch will have a
-
-A Home About Docs , signup and login 
-user will have to signup to view docs
-
-Will not be writing documentation tonight just setting it up
-
-
-
-
-*/
 app.listen(port, () => console.log(`listening on port ${port}`))

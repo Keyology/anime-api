@@ -2,8 +2,12 @@ module.exports = (app) => {
 
 
     app.get('/', (req, res) => {
+        const currentUser = req.user;
+
         //This route will render the home page 
-        res.render('index.ejs')
+        res.render('index.ejs', {
+            currentUser
+        })
     })
 
     app.get('/docs', (req, res) => {
