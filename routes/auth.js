@@ -19,6 +19,9 @@ module.exports = (app) => {
 
     app.post('/signup', (req, res) => {
         //this route will signup user
+        let newBody = req.body;
+        console.log('this is the value of req.body.search', newBody.email)
+
         bcrypt.hash(req.body.password, 10, (err, hash) => {
             if (err) {
                 return res.status(500).json({

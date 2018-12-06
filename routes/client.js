@@ -5,6 +5,7 @@ module.exports = (app) => {
 
     app.get('/', (req, res) => {
         const currentUser = req.user;
+        //might not be able to use req.body because im using a get request
 
         //This route will render the home page 
         res.render('index.ejs', {
@@ -25,8 +26,10 @@ module.exports = (app) => {
         res.render('search')
     })
 
-    app.get('/search/:name', (req, res) => {
+    app.post('/search', (req, res) => {
         //this route will query db for anime
+        let newBody = req.body;
+        console.log('this is the value of req.body.search', newBody.search)
 
 
         Animeshows.find({
@@ -41,6 +44,7 @@ module.exports = (app) => {
             } else {
                 res.json(anime)
                 console.log(anime)
+
             }
         })
 
