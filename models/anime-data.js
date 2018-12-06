@@ -23,3 +23,5 @@ animeshowsSchema = new Schema({
 
 
 })
+
+module.exports = mongoose.model('Animeshows', animeshowsSchema);
