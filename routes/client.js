@@ -15,7 +15,7 @@ module.exports = (app) => {
 
     app.get('/docs', (req, res) => {
         //this route will send users to the documentation page 
-        res.redirect('https://stackoverflow.com/questions/17755147/displaying-an-image-with-ejs-in-node-js-express')
+        res.redirect('https://keyology.github.io/keyology.notes.github.io/#/')
     })
 
     app.get('/about', (req, res) => {
@@ -26,7 +26,7 @@ module.exports = (app) => {
         res.render('search')
     })
 
-    app.post('/search', (req, res) => {
+    app.post('/search/:animename', (req, res) => {
         //this route will query db for anime
         let newBody = req.body;
         console.log('this is the value of req.body.search', newBody.search)
@@ -54,3 +54,5 @@ module.exports = (app) => {
 
 
 }
+
+//How to include  a nested route in this project
